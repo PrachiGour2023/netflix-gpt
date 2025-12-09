@@ -1,7 +1,9 @@
+import RootRoute from "./navigation/RootRoute";
+
 function App() {
   return (
     <>
-      <h1 className="font-bold text-green-700">helloooooooooooooo</h1>
+      <RootRoute />
     </>
   );
 }
