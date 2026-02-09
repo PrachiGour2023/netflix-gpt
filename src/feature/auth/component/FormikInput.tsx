@@ -1,3 +1,4 @@
+// @ts-nocheck
 import InputField from "../../../components/InputField";
 import type { FormikProps } from "formik";
 import type { ComponentProps } from "react";

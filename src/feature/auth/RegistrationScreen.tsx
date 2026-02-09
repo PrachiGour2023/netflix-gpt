@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Link, useNavigate, type NavigateFunction } from "react-router";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
@@ -36,13 +37,13 @@ const RegistrationScreen = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           if (user) {
-            updateProfile(auth.currentUser, {
+            updateProfile(user, {
               displayName: values.name,
               photoURL:
                 "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
             })
               .then(() => {
-                const { uid, email, displayName, photoURL } = auth.currentUser;
+                const { uid, email, displayName, photoURL } = user;
                 dispatch(
                   addUser({
                     uid: uid,

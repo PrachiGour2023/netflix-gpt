@@ -6,3 +6,4 @@ export const appStore = configureStore({
     user: userReducer,
   },
 });
+export type RootState = ReturnType<typeof appStore.getState>;

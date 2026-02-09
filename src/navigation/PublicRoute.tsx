@@ -1,9 +1,15 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import type { ReactNode } from "react";
 import { Navigate } from "react-router";
 
-const PublicRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
+type Props = {
+  children: ReactNode;
+};
+
+const PublicRoute = ({ children }: Props) => {
+  const context = useContext(AuthContext);
+  const user = context?.user;
   return !user ? children : <Navigate to={"/dashboard"} replace />;
 };
 
