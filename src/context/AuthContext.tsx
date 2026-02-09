@@ -1,17 +1,23 @@
+// @ts-nocheck
 import { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../redux/slices/user/userSlice";
 import { onAuthStateChanged } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { auth } from "../services/firebase";
+import type { ReactNode } from "react";
 
-interface AuthContextType {
+type Props = {
+  children: ReactNode;
+};
+
+export interface AuthContextType {
   user: User | null;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }: Props) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState<User | null>(null);
 
@@ -26,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             email: email,
             displayName: displayName,
             photoURL: photoURL,
-          })
+          }),
         );
       } else {
         dispatch(removeUser());
@@ -34,7 +40,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>

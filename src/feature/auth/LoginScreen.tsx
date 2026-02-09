@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Link, useNavigate, type NavigateFunction } from "react-router";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";

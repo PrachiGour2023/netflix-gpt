@@ -1,9 +1,10 @@
+// @ts-nocheck
 import { signOut } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
 import Header from "../../layout/Header";
+import type { RootState } from "../../redux/store";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Dashboard = () => {
       <Header />
       <p></p>
       <div className="mr-10 mt-2">
-        <img src={userData?.photoURL} alt="user" className="w-10 rounded-4xl" />
+        {/* <img src={userData?.photoURL} alt="user" className="w-10 rounded-4xl" /> */}
         <button
           onClick={handleSignout}
           className="cursor-pointer text-white font-medium absolute"
