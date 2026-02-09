@@ -1,52 +1,46 @@
+import { Link, useNavigate, type NavigateFunction } from "react-router";
 import Button from "../../components/Button";
-import InputField from "../../components/InputField";
 import Header from "../../layout/Header";
 import { useFormik } from "formik";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../services/firebase";
+import FormikInput from "./component/FormikInput";
+import { validateAuth } from "../../utils/validation";
+import { useState } from "react";
 
 interface FormValues {
   email: string;
   password: string;
 }
 const LoginScreen = () => {
+  const navigate: NavigateFunction = useNavigate();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const formik = useFormik<FormValues>({
     initialValues: {
       email: "",
       password: "",
     },
 
-    validate: (values) => {
-      const errors: Partial<FormValues> = {};
-
-      if (!values.email) {
-        errors.email = "Email is required";
-      } else if (!/^\S+@\S+\.\S+$/.test(values.email)) {
-        errors.email = "Email is not valid";
-      }
-
-      if (!values.password) {
-        errors.password = "Password is required";
-      } else if (
-        !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
-          values.password
-        )
-      ) {
-        errors.password = "Password is not valid";
-      }
-
-      return errors;
-    },
+    validate: (values) => validateAuth(values, false),
 
     onSubmit: (values) => {
-      console.log(values);
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredentail) => {
+          const user = userCredentail.user;
+          console.log(user);
+
+          if (user) {
+            navigate("/dashboard");
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + "-" + errorMessage);
+        });
     },
   });
-
-  // const handleChange = (e: { target: { name: string; value: string } }) => {
-  //   setInput((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // };
 
   return (
     <div className="relative">
@@ -56,48 +50,29 @@ const LoginScreen = () => {
       />
       <div className="">
         <Header />
-
         <form
           onSubmit={formik.handleSubmit}
           className="absolute top-25 left-2/6 bg-black/90 p-15 rounded-md"
         >
           <h2 className="font-bold text-white text-3xl mb-5">Sign In</h2>
-
           <div>
-            <InputField
-              name="email"
-              value={formik?.values?.email}
-              handleChange={formik?.handleChange}
-              handleBlur={formik?.handleBlur}
+            <FormikInput
+              name={"email"}
+              formik={formik}
+              type={"email"}
               placeholder="Email or mobile number"
-              fieldClass={
-                formik?.touched?.email && formik?.errors?.email
-                  ? "border-red-600"
-                  : "border-gray-400"
-              }
             />
-            {formik?.touched?.email && formik?.errors?.email && (
-              <p className="text-red-600 text-sm">{formik?.errors?.email}</p>
-            )}
           </div>
           <br />
           <div>
-            <InputField
-              name="password"
-              value={formik?.values?.password}
-              handleBlur={formik?.handleBlur}
-              handleChange={formik?.handleChange}
+            <FormikInput
+              name={"password"}
+              formik={formik}
+              type={"password"}
               placeholder="Password"
-              fieldClass={
-                formik?.touched?.password && formik?.errors?.password
-                  ? "border-red-600"
-                  : "border-gray-400"
-              }
             />
-            {formik?.touched?.password && formik?.errors?.password && (
-              <p className="text-red-600 text-sm">{formik?.errors?.password}</p>
-            )}
           </div>
+          <p className="text-red-600 text-sm my-2">{errorMessage}</p>
           <Button title="Sign In" />
           <p className="text-gray-400 text-center">OR</p>
           <p className="underline text-white text-center cursor-pointer">
@@ -105,7 +80,9 @@ const LoginScreen = () => {
           </p>
           <p className="text-white my-2 text-center">
             New to Netflix?{" "}
-            <span className="underline cursor-pointer">Sign up now.</span>
+            <Link to={"/signup"}>
+              <span className="underline cursor-pointer">Sign up now.</span>
+            </Link>
           </p>
         </form>
       </div>

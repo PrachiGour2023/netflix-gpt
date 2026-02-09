@@ -7,6 +7,7 @@ interface TextInputProps {
   handleChange: (e: { target: { name: string; value: string } }) => void;
   handleBlur: (e: { target: { name: string; value: string } }) => void;
   fieldClass: string;
+  type: string;
 }
 
 const InputField: React.FC<TextInputProps> = ({
@@ -16,11 +17,13 @@ const InputField: React.FC<TextInputProps> = ({
   handleChange,
   handleBlur,
   fieldClass,
+  type,
 }) => {
   return (
     <div className={`p-2 rounded-sm border-1 border-gray-400 ${fieldClass}`}>
       <input
         name={name}
+        type={type}
         value={value}
         placeholder={placeholder}
         onChange={handleChange}
