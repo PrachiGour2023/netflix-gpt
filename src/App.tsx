@@ -1,10 +1,12 @@
-import RootRoute from "./navigation/RootRoute";
+import AppRoute from "./navigation/AppRoute";
+import { appStore } from "./redux/store";
+import { Provider } from "react-redux";
 
 function App() {
   return (
-    <>
-      <RootRoute />
-    </>
+    <Provider store={appStore}>
+      <AppRoute />
+    </Provider>
   );
 }
 
