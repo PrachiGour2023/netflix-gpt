@@ -4,6 +4,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "https://prachigour2023.github.io/netflix-gpt/",
+  base: "/netflix-gpt/",
   plugins: [react(), tailwindcss()],
 });
