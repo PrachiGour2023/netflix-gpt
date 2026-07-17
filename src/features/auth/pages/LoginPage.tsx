@@ -4,12 +4,15 @@ import { BottomGradient } from "../components/BottomGradient";
 import { LabelInputContainer } from "../components/LabelInputContainer";
 import { useRef, useState } from "react";
 import { checkValidation } from "../../../utils/validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../utils/firebase";
+import { useNavigate } from "react-router";
 
 
 const LoginPage = ({ handleFormStatus }: {
     handleFormStatus: () => void;
 }) => {
-
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const email = useRef<HTMLInputElement | null>(null);
     const password = useRef<HTMLInputElement | null>(null);
@@ -23,6 +26,20 @@ const LoginPage = ({ handleFormStatus }: {
         });
 
         setErrorMessage(result)
+        if (!email.current || !password.current) return;
+
+        if (result === null) {
+            signInWithEmailAndPassword(auth, email?.current?.value, password.current?.value)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    navigate("/landing")
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + " - " + errorMessage)
+                });
+        }
     }
 
     return (

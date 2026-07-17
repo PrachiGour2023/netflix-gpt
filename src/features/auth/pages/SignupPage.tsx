@@ -1,38 +1,49 @@
 import React, { useState } from "react";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
-import {BottomGradient} from "../components/BottomGradient";
+import { BottomGradient } from "../components/BottomGradient";
 import { LabelInputContainer } from "../components/LabelInputContainer";
 import {
     IconBrandGithub,
     IconBrandGoogle,
 } from "@tabler/icons-react";
 import { checkValidation } from "../../../utils/validation";
+import { auth } from "../../../utils/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const SignupPage = ({handleFormStatus, isLoginForm}: {
+
+const SignupPage = ({ handleFormStatus, isLoginForm }: {
     handleFormStatus: () => void;
     isLoginForm: boolean;
 }) => {
-
-    console.log(isLoginForm)
-
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [input, setInput] = useState({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: ""
+    })
 
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
-
         e.preventDefault();
-
-        const result = checkValidation({
-            email: "prachi@gmail.com", 
-            password: 'prachi@123', 
-            firstname: 'Prachi', 
-            lastname: 'Gour', 
-            isLoginForm
-        })
-
+        const result = checkValidation({ ...input, isLoginForm })
         setErrorMessage(result)
+
+        if(result === null) {
+
+        createUserWithEmailAndPassword(auth, input.email, input.password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " - " + errorMessage)
+            });
+        }
     }
- 
+
     return (
         <>
             <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-3 dark:bg-black">
@@ -43,21 +54,43 @@ const SignupPage = ({handleFormStatus, isLoginForm}: {
                     <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
                         <LabelInputContainer>
                             <Label htmlFor="firstname">First name</Label>
-                            <Input id="firstname" placeholder="Tyler" type="text" />
+                            <Input
+                                id="firstname"
+                                placeholder="Tyler"
+                                type="text"
+                                value={input.firstname}
+                                onChange={(e) => setInput({ ...input, firstname: e.target.value })}
+                            />
                         </LabelInputContainer>
                         <LabelInputContainer>
                             <Label htmlFor="lastname">Last name</Label>
-                            <Input id="lastname" placeholder="Durden" type="text" />
+                            <Input
+                                id="lastname"
+                                placeholder="Durden"
+                                type="text"
+                                value={input.lastname}
+                                onChange={(e) => setInput({ ...input, lastname: e.target.value })}
+                            />
                         </LabelInputContainer>
                     </div>
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" placeholder="projectmayhem@fc.com" type="email" />
+                        <Input
+                            id="email"
+                            placeholder="projectmayhem@fc.com"
+                            type="email"
+                            value={input.email}
+                            onChange={(e) => setInput({ ...input, email: e.target.value })}
+                        />
                     </LabelInputContainer>
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="password">Password</Label>
-                        <Input id="password" placeholder="••••••••" type="password" />
-                    <span className="text-xs text-red-500 font-bold">{errorMessage}</span>
+                        <Input id="password"
+                            placeholder="••••••••"
+                            type="password"
+                            value={input.password}
+                            onChange={(e) => setInput({ ...input, password: e.target.value })} />
+                        <span className="text-xs text-red-500 font-bold">{errorMessage}</span>
                     </LabelInputContainer>
 
 
@@ -69,7 +102,7 @@ const SignupPage = ({handleFormStatus, isLoginForm}: {
                         <BottomGradient />
                     </button>
 
-                   <div className="text-center mt-2">
+                    <div className="text-center mt-2">
                         <span className="text-white text-sm">Already Registered ? <span className="text-blue-500 hover:underline text-sm cursor-pointer" onClick={handleFormStatus}>Sign In</span></span>
                     </div>
 
