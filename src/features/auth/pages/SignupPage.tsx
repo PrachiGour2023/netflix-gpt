@@ -9,13 +9,14 @@ import {
 } from "@tabler/icons-react";
 import { checkValidation } from "../../../utils/validation";
 import { auth } from "../../../utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 
 const SignupPage = ({ handleFormStatus, isLoginForm }: {
     handleFormStatus: () => void;
     isLoginForm: boolean;
 }) => {
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [input, setInput] = useState({
         firstname: "",
@@ -29,18 +30,21 @@ const SignupPage = ({ handleFormStatus, isLoginForm }: {
         const result = checkValidation({ ...input, isLoginForm })
         setErrorMessage(result)
 
-        if(result === null) {
+        if (result === null) {
 
-        createUserWithEmailAndPassword(auth, input.email, input.password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user)
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setErrorMessage(errorCode + " - " + errorMessage)
-            });
+            createUserWithEmailAndPassword(auth, input.email, input.password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user)
+                    updateProfile(user, {
+                        displayName: input.firstname + " " + input.lastname
+                    })
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setErrorMessage(errorCode + " - " + errorMessage)
+                });
         }
     }
 

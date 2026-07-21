@@ -1,24 +1,26 @@
-import React from 'react'
-import { IconUserSquareRounded } from '@tabler/icons-react';
-import { auth } from "../../../utils/firebase";
-import { signOut } from "firebase/auth";
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { Header } from '../../layout/pages/Header';
+import { useEffect } from 'react';
+import { fetchMovies } from '../../../redux/action/movieAction';
+import type { AppDispatch, RootState } from '../../../redux/store';
+import { HoverMovieCard } from '../components/HoverCard';
 
 const LandingPage = () => {
 
-    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const movieData = useSelector((state: RootState) => state.movie);
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
-            navigate("/")
-        }).catch((error) => {
-            navigate("/error", error)
-        });
-    }
+    useEffect(() => {
+        dispatch(fetchMovies());
+    }, []);
+
     return (
-        <div>
-            <IconUserSquareRounded />
-            <button onClick={handleLogout}>Sign Out</button>
+        <div className='bg-gray-950 w-full h-auto p-5'>
+            <Header />
+            <div>
+                <h3 className='text-white text-xl font-bold p-8'>Movies</h3>
+                <HoverMovieCard data={movieData.movies} />
+            </div>
         </div>
     )
 }

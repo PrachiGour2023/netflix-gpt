@@ -1,15 +1,23 @@
 
 import { createBrowserRouter } from 'react-router';
-import Home from '../features/auth/pages/Home';
 import LandingPage from '../features/dashboard/pages/LandingPage';
+import GlobalError from './GlobalError';
+import Home from '../features/auth/pages/Home';
+import { RootLayout } from './RootLayout';
 
 export const AppRoutes = createBrowserRouter([
     {
-        path: '/',
-        element: <Home />
+        element: <RootLayout />,
+        errorElement: <GlobalError />,
+        children: [
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/landing",
+                element: <LandingPage />,
+            },
+        ],
     },
-    {
-        path: '/landing',
-        element: <LandingPage />
-    }
-])
+]);
