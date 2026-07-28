@@ -8,7 +8,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../redux/slice/userSlice";
-import { useNavigate } from "react-router";
 
 
 const LoginPage = ({ handleFormStatus }: {

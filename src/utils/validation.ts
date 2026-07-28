@@ -8,7 +8,6 @@ type ValidationProps = {
 
 export const checkValidation = ({ email = "", password = "", firstname = "", lastname = "",isLoginForm }: ValidationProps) => {
 
-    console.log(isLoginForm)
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#()_\-+=])[A-Za-z\d@$!%*?&^#()_\-+=]{8,}$/;

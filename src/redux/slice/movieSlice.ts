@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchMovies } from "../action/movieAction";
+import { fetchInTheatreMovies, getIndianMovies, getMovieVideo, movieGenresList, topRatedMovies } from "../action/movieAction";
 
 const initialState: any = {
     loading: false,
-    movies: [],
+    moviesInTheatre: [],
+    moviesTopRated: [],
+    movieGenreList: [],
+    indianMovies: [],
+    movieVideo: [],
     error: null
 }
 
@@ -13,19 +17,76 @@ const movieSlice = createSlice({
     reducers: {},
     extraReducers(builder) {
         builder
-            .addCase(fetchMovies.pending, (state) => {
+            .addCase(fetchInTheatreMovies.pending, (state) => {
                 state.loading = true,
                     state.error = null
             })
 
-            .addCase(fetchMovies.fulfilled, (state, action) => {
-                console.log(action.payload)
+            .addCase(fetchInTheatreMovies.fulfilled, (state, action) => {
                 state.loading = false,
-                    state.movies = action.payload
+                    state.moviesInTheatre = action.payload
             })
 
-            .addCase(fetchMovies.rejected, (state, action) => {
+            .addCase(fetchInTheatreMovies.rejected, (state, action) => {
                 state.loading = false,
+                    state.error = action.payload
+            })
+
+            .addCase(topRatedMovies.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+
+            .addCase(topRatedMovies.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.moviesTopRated = action.payload
+            })
+
+            .addCase(topRatedMovies.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            .addCase(movieGenresList.pending, (state) => {
+                state.loading = true,
+                    state.error = null
+            })
+
+            .addCase(movieGenresList.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.movieGenreList = action.payload
+            })
+
+            .addCase(movieGenresList.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            .addCase(getIndianMovies.pending, (state) => {
+                state.loading = true
+            })
+
+            .addCase(getIndianMovies.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.indianMovies = action.payload
+            })
+
+            .addCase(getIndianMovies.rejected, (state, action) => {
+                state.loading = false,
+                    state.error = action.payload
+            })
+
+            .addCase(getMovieVideo.pending, (state) => {
+                state.loading = true
+            })
+
+            .addCase(getMovieVideo.fulfilled, (state, action) => {
+                state.loading = false,
+                    state.movieVideo = action.payload
+            })
+
+            .addCase(getMovieVideo.rejected, (state, action) => {
+                state.laoding = false,
                     state.error = action.payload
             })
     },

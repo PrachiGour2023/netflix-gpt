@@ -35,7 +35,6 @@ const SignupPage = ({ handleFormStatus, isLoginForm }: {
             createUserWithEmailAndPassword(auth, input.email, input.password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    console.log(user)
                     updateProfile(user, {
                         displayName: input.firstname + " " + input.lastname
                     })

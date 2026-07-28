@@ -1,23 +1,61 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { movieIds, API_KEY } from "../../utils/constant";
+import { apiFetch } from "../../services/apiConfig";
 
-export const fetchMovies = createAsyncThunk("movie/fetchMovies", async (_, thunkAPI) => {
+export const fetchInTheatreMovies = createAsyncThunk("movie/fetchInTheatreMovies", async (_, thunkAPI) => {
     try {
-        const result = await Promise.all(movieIds.map(async (id) => {
-            const response = await fetch(`https://webservice.fanart.tv/v3.2/movies/${id}?api_key=${API_KEY}`)
-
-            const data = await response.json();
-
-            return {
-                id: data.tmdb_id,
-                name: data.name,
-                movie: data.moviebackground[0].url,
-                movieposter: data.movieposter[0]?.url
-            }
-        }))
-
-        return result;
+        const response = await apiFetch('/movie/now_playing?with_origin_country=IN&page=1')
+        return response.results;
     } catch (error) {
         return thunkAPI.rejectWithValue("Failed to fetch movies");
+    }
+})
+
+export const topRatedMovies = createAsyncThunk("movie/fetchPopularMovies", async (_, thunkAPI) => {
+    try {
+        const response = await apiFetch('/movie/top_rated?page=1')
+        return response.results;
+    } catch (error) {
+        return thunkAPI.rejectWithValue("Failed to fetch popular movies")
+    }
+})
+
+export const movieGenresList = createAsyncThunk("movie/fetchGenreList", async (_, thunkAPI) => {
+    try {
+        const response = await apiFetch('/genre/movie/list?language=in')
+        const genreMovies = await Promise.all(
+            response.genres.map(async (genre: any) => {
+
+                const res = await apiFetch(
+                    `/discover/movie?with_genres=${genre.id}`
+                );
+
+                return {
+                    id: genre.id,
+                    name: genre.name,
+                    movies: res.results
+                }
+            })
+        );
+        return genreMovies;
+    } catch (error) {
+        return thunkAPI.rejectWithValue("Failed to fetch genre list")
+    }
+})
+
+export const getIndianMovies = createAsyncThunk("movie/fetchInMovies", async (_, thunkAPI) => {
+    try {
+        const response = await apiFetch(`/discover/movie?with_origin_country=IN`)
+        return response.results;
+    } catch (error) {
+        return thunkAPI.rejectWithValue("Failed to load genre based list")
+    }
+})
+
+export const getMovieVideo = createAsyncThunk("movie/fetchVideo", async (vidId: number, thunkAPI) => {
+    try {
+        const response = await apiFetch(`/movie/${vidId}/videos?language=en-US`)
+        return response.results;
+    } catch (error) {
+        return thunkAPI.rejectWithValue("Failed to load movie video")
     }
 })
