@@ -4,6 +4,7 @@ import LandingPage from '../features/dashboard/pages/LandingPage';
 import GlobalError from './GlobalError';
 import Home from '../features/auth/pages/Home';
 import { RootLayout } from './RootLayout';
+import TrendingMovieList from '../features/movies/pages/TrendingMovieList';
 
 export const AppRoutes = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ export const AppRoutes = createBrowserRouter([
                 path: "/landing",
                 element: <LandingPage />,
             },
+            {
+                path: "/trending-movies",
+                element: <TrendingMovieList />
+            }
         ],
     },
 ]);

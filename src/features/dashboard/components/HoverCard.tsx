@@ -9,7 +9,7 @@ export function HoverMovieCard({ data }: any) {
                     <DirectionAwareHover
                         imageUrl={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
                     >
-                        <p className="font-bold text-lg">{item.title}</p>
+                        <p className="font-bold text-lg">{item.title ?? item.original_name}</p>
                         <p className="font-sans text-xs">{item.overview}</p>
                     </DirectionAwareHover>
                 </div>

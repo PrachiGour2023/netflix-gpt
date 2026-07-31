@@ -8,17 +8,21 @@ import { TabsDemo } from '../components/Tabs';
 import { CarouselDemo } from '../components/Carousel';
 import { IconChevronRight } from '@tabler/icons-react';
 import Footer from '../../layout/pages/Footer';
+import { getTodayAiredTVList } from '../../../redux/action/tvAction';
+import { Link } from 'react-router';
 
 const LandingPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const movieData = useSelector((state: RootState) => state.movie);
+    const tvData = useSelector((state: RootState) => state.tv);
 
     useEffect(() => {
         dispatch(fetchInTheatreMovies());
         dispatch(topRatedMovies());
         dispatch(movieGenresList());
         dispatch(getIndianMovies());
+        dispatch(getTodayAiredTVList());
     }, []);
 
     return (
@@ -30,7 +34,7 @@ const LandingPage = () => {
             <div>
                 <div className='text-white flex items-center mt-6'>
                     <h3 className='text-white text-xl font-bold my-5'>New in Theatres</h3>
-                    <span className='text-white text-lg ml-3 font-semibold'>See more</span>
+                    <Link to={"/trending-movies"} className='text-white text-lg ml-3 font-semibold'>See more</Link>
                     <IconChevronRight stroke={2} size={25} />
                 </div>
                 <HoverMovieCard data={movieData.moviesInTheatre} />
@@ -38,13 +42,21 @@ const LandingPage = () => {
             <div>
                 <div className='text-white flex items-center mt-6'>
                     <h3 className='text-white text-xl font-bold my-5'>Top Rated Movies</h3>
-                    <span className='text-white text-lg ml-3 font-semibold'>See more</span>
+                    <Link to={"/trending-movies"} className='text-white text-lg ml-3 font-semibold'>See more</Link>
                     <IconChevronRight stroke={2} size={25} />
                 </div>
                 <HoverMovieCard data={movieData.moviesTopRated} />
             </div>
             <div>
                 <TabsDemo />
+            </div>
+            <div>
+                <div className='text-white flex items-center'>
+                    <h3 className='text-white text-xl font-bold my-5'>Today's Aired Shows</h3>
+                    <span className='text-white text-lg ml-3 font-semibold'>See more</span>
+                    <IconChevronRight stroke={2} size={25} />
+                </div>
+                <HoverMovieCard data={tvData.currentAirList} />
             </div>
             <Footer />
         </div>
