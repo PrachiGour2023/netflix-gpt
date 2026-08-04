@@ -23,8 +23,9 @@ const movieSlice = createSlice({
             })
 
             .addCase(fetchInTheatreMovies.fulfilled, (state, action) => {
+                console.log(action.payload)
                 state.loading = false,
-                    state.moviesInTheatre = action.payload
+                    state.moviesInTheatre = [...state.moviesInTheatre, ...action.payload]
             })
 
             .addCase(fetchInTheatreMovies.rejected, (state, action) => {

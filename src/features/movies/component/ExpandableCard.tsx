@@ -1,18 +1,13 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "../../../hooks/use-outside-click";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../redux/store";
 
-export function ExpandableCardDemo() {
-
-    const cards = useSelector((state: RootState) => state.movie.moviesInTheatre);
+export function ExpandableCardDemo({ cards }: any) {
     
     const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
         null
     );
 
-    console.log("active", active)
     const id = useId();
     const ref = useRef<HTMLDivElement>(null!);
 
@@ -98,7 +93,7 @@ export function ExpandableCardDemo() {
                                             layoutId={`description-${active.description}-${id}`}
                                             className="text-neutral-600 dark:text-neutral-400 text-base"
                                         >
-                                            {active.overview}
+                                            {active?.overview}
                                         </motion.p>
                                     </div>
 
@@ -136,7 +131,7 @@ export function ExpandableCardDemo() {
                 {cards.map((card: any, index: number) => (
                     <motion.div
                         layoutId={`card-${card.title}-${id}`}
-                        key={card.title}
+                        key={card.id}
                         onClick={() => setActive(card)}
                         className="p-4 flex flex-col  hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
                     >

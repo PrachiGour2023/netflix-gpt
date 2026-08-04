@@ -1,18 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiFetch } from "../../services/apiConfig";
 
-export const fetchInTheatreMovies = createAsyncThunk("movie/fetchInTheatreMovies", async (_, thunkAPI) => {
+export const fetchInTheatreMovies = createAsyncThunk("movie/fetchInTheatreMovies", async (page: number, thunkAPI) => {
     try {
-        const response = await apiFetch('/movie/now_playing?with_origin_country=IN&page=1')
+        const response = await apiFetch(`/movie/now_playing?with_origin_country=IN&page=${page}`)
         return response.results;
     } catch (error) {
         return thunkAPI.rejectWithValue("Failed to fetch movies");
     }
 })
 
-export const topRatedMovies = createAsyncThunk("movie/fetchPopularMovies", async (_, thunkAPI) => {
+export const topRatedMovies = createAsyncThunk("movie/fetchPopularMovies", async (page: number, thunkAPI) => {
     try {
-        const response = await apiFetch('/movie/top_rated?page=1')
+        const response = await apiFetch(`/movie/top_rated?page=${page}`)
         return response.results;
     } catch (error) {
         return thunkAPI.rejectWithValue("Failed to fetch popular movies")

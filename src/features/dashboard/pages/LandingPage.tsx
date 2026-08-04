@@ -18,8 +18,8 @@ const LandingPage = () => {
     const tvData = useSelector((state: RootState) => state.tv);
 
     useEffect(() => {
-        dispatch(fetchInTheatreMovies());
-        dispatch(topRatedMovies());
+        dispatch(fetchInTheatreMovies(1));
+        dispatch(topRatedMovies(1));
         dispatch(movieGenresList());
         dispatch(getIndianMovies());
         dispatch(getTodayAiredTVList());
