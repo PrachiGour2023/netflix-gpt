@@ -23,9 +23,10 @@ const movieSlice = createSlice({
             })
 
             .addCase(fetchInTheatreMovies.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.loading = false,
-                    state.moviesInTheatre = [...state.moviesInTheatre, ...action.payload]
+                state.loading = false;
+                const existingIds = new Set(state.moviesInTheatre.map((movie: any) => movie.id));
+                const newMovies = action.payload.filter((movie: any) => !existingIds.has(movie.id));
+                state.moviesInTheatre.push(...newMovies);
             })
 
             .addCase(fetchInTheatreMovies.rejected, (state, action) => {
