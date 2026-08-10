@@ -1,0 +1,40 @@
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.shimmer-base {
+    background: linear-gradient(90deg,
+            #e0e0e0 25%,
+            #f0f0f0 50%,
+            #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+    will-change: background-position;
+}
+
+/* Base shapes for structural flexibility */
+.shimmer-text {
+    height: 16px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.shimmer-avatar {
+    border-radius: 50%;
+}
+
+.shimmer-block {
+    border-radius: 8px;
+}
+
+.shimmer-carousel {
+    border-radius: 10px;
+    height: 80vh;
+    margin: 20px 0px;
+}

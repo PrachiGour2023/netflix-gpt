@@ -10,6 +10,7 @@ import { IconChevronRight } from '@tabler/icons-react';
 import Footer from '../../layout/pages/Footer';
 import { getTodayAiredTVList } from '../../../redux/action/tvAction';
 import { Link } from 'react-router';
+import { CarouselSkeleton, CardSkeleton } from './Skeleton';
 
 const LandingPage = () => {
 
@@ -29,7 +30,7 @@ const LandingPage = () => {
         <div className='bg-gray-950 w-full h-auto p-5'>
             <Header />
             <div>
-                <CarouselDemo />
+                {movieData?.indianMovies?.length > 0 ? <CarouselDemo /> : <CarouselSkeleton />}
             </div>
             <div>
                 <div className='text-white flex items-center mt-6'>
@@ -37,18 +38,18 @@ const LandingPage = () => {
                     <Link to={"/trending-movies"} className='text-white text-lg ml-3 font-semibold'>See more</Link>
                     <IconChevronRight stroke={2} size={25} />
                 </div>
-                <HoverMovieCard data={movieData.moviesInTheatre} />
+                {movieData?.moviesInTheatre?.length > 0 ? <HoverMovieCard data={movieData.moviesInTheatre} /> : <CardSkeleton />}
             </div>
             <div>
                 <div className='text-white flex items-center mt-6'>
                     <h3 className='text-white text-xl font-bold my-5'>Top Rated Movies</h3>
-                    <Link to={"/trending-movies"} className='text-white text-lg ml-3 font-semibold'>See more</Link>
+                    <Link to={"/top-rated-movies"} className='text-white text-lg ml-3 font-semibold'>See more</Link>
                     <IconChevronRight stroke={2} size={25} />
                 </div>
-                <HoverMovieCard data={movieData.moviesTopRated} />
+                {movieData?.moviesTopRated?.length > 0 ? <HoverMovieCard data={movieData.moviesTopRated} /> : <CardSkeleton />}
             </div>
             <div>
-                <TabsDemo />
+                {movieData?.movieGenreList?.length > 0 && <TabsDemo />}
             </div>
             <div>
                 <div className='text-white flex items-center'>
@@ -56,7 +57,7 @@ const LandingPage = () => {
                     <span className='text-white text-lg ml-3 font-semibold'>See more</span>
                     <IconChevronRight stroke={2} size={25} />
                 </div>
-                <HoverMovieCard data={tvData.currentAirList} />
+                {tvData?.currentAirList?.length > 0 ? <HoverMovieCard data={tvData.currentAirList} /> : <CardSkeleton />}
             </div>
             <Footer />
         </div>

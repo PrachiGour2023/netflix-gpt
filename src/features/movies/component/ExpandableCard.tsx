@@ -1,9 +1,12 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useOutsideClick } from "../../../hooks/use-outside-click";
+import { Link } from "react-router";
 
 export const ExpandableCard = React.memo(
     function ExpandableCardDemo({ cards }: any) {
+        console.log("11111111111", cards);
+
 
         const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
             null
@@ -101,18 +104,17 @@ export const ExpandableCard = React.memo(
                                                 {active?.overview}
                                             </motion.p>
                                         </div>
-
-                                        <motion.a
-                                            layout
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            href={active.ctaLink}
-                                            target="_blank"
-                                            className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
-                                        >
-                                            Play
-                                        </motion.a>
+                                        <Link to={`/movie-detail/${active.id}`} state={{ movieData: active }}>
+                                            <motion.div
+                                                layout
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
+                                            >
+                                                Play
+                                            </motion.div>
+                                        </Link>
                                     </div>
                                     <div className="pt-4 relative px-4">
                                         <motion.div

@@ -38,9 +38,9 @@ export const RootLayout = () => {
 
     }, [dispatch]);
 
-    if (loading) {
-        return "Loading......"
-    }
+    // if (loading) {
+    //     return "Loading......"
+    // }
 
     return <Outlet />;
 };

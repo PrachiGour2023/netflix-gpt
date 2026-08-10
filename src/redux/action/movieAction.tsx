@@ -54,7 +54,8 @@ export const getIndianMovies = createAsyncThunk("movie/fetchInMovies", async (_,
 export const getMovieVideo = createAsyncThunk("movie/fetchVideo", async (vidId: number, thunkAPI) => {
     try {
         const response = await apiFetch(`/movie/${vidId}/videos?language=en-US`)
-        return response.results;
+        const filterTrailer = response.results.filter((item: any) => item.type === "Trailer")
+        return filterTrailer?.length > 0 ? filterTrailer[0] : response?.results[0]
     } catch (error) {
         return thunkAPI.rejectWithValue("Failed to load movie video")
     }

@@ -40,8 +40,10 @@ const movieSlice = createSlice({
             })
 
             .addCase(topRatedMovies.fulfilled, (state, action) => {
-                state.loading = false,
-                    state.moviesTopRated = action.payload
+                state.loading = false;
+                const existingIds = new Set(state.moviesTopRated.map((movie: any) => movie.id))
+                const topMovies = action.payload.filter((movie: any) => !existingIds.has(movie.id))
+                state.moviesTopRated.push(...topMovies)
             })
 
             .addCase(topRatedMovies.rejected, (state, action) => {

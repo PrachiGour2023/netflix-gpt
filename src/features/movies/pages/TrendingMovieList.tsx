@@ -14,6 +14,8 @@ const TrendingMovieList = () => {
   const isFetching = useRef<boolean>(false)
   const dispatch = useDispatch<AppDispatch>();
   const cards = useSelector((state: RootState) => state.movie.moviesInTheatre);
+  console.log("cardsssss", cards);
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -25,7 +27,7 @@ const TrendingMovieList = () => {
 
     }, {
       threshold: 0,
-      rootMargin: "500px"
+      rootMargin: "100px"
     })
 
     if (loaderRef.current) {
