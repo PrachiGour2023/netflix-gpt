@@ -5,9 +5,6 @@ import { Link } from "react-router";
 
 export const ExpandableCard = React.memo(
     function ExpandableCardDemo({ cards }: any) {
-        console.log("11111111111", cards);
-
-
         const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
             null
         );
@@ -135,7 +132,7 @@ export const ExpandableCard = React.memo(
                     ) : null}
                 </AnimatePresence>
                 <ul className="mx-auto w-full grid grid-cols-1 md:grid-cols-4 items-start gap-4">
-                    {cards.map((card: any, index: number) => (
+                    {cards.map((card: any) => (
                         <div
                             key={card.id}
                             onClick={() => setActive(card)}

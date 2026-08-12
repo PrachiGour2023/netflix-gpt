@@ -1,12 +1,15 @@
 
 import { createBrowserRouter } from 'react-router';
-import LandingPage from '../features/dashboard/pages/LandingPage';
 import GlobalError from './GlobalError';
-import Home from '../features/auth/pages/Home';
 import { RootLayout } from './RootLayout';
 import TrendingMovieList from '../features/movies/pages/TrendingMovieList';
 import TopRatedMovieList from '../features/movies/pages/TopRatedMovieList';
 import MovieDetailPage from '../features/movies/pages/MovieDetailPage';
+import { lazy } from 'react';
+import GptHome from '../features/gpt/pages/GptHome';
+
+const Landing = lazy(() => import("../features/dashboard/pages/LandingPage"));
+const Home = lazy(() => import("../features/auth/pages/Home"))
 
 export const AppRoutes = createBrowserRouter([
     {
@@ -19,7 +22,7 @@ export const AppRoutes = createBrowserRouter([
             },
             {
                 path: "/landing",
-                element: <LandingPage />,
+                element: <Landing />,
             },
             {
                 path: "/trending-movies",
@@ -32,6 +35,10 @@ export const AppRoutes = createBrowserRouter([
             {
                 path: "/movie-detail/:id",
                 element: <MovieDetailPage />
+            },
+            {
+                path: "/gpt-search",
+                element: <GptHome />
             }
         ],
     },
