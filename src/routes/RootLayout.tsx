@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
@@ -11,8 +11,6 @@ import { useNavigate } from "react-router";
 export const RootLayout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -30,17 +28,11 @@ export const RootLayout = () => {
                 navigate("/")
             }
 
-            setLoading(false);
-
         });
 
         return unsubscribe;
 
     }, [dispatch]);
-
-    // if (loading) {
-    //     return "Loading......"
-    // }
 
     return <Outlet />;
 };

@@ -8,7 +8,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../../utils/firebase";
 
 export function Header({ className }: { className?: string }) {
-    const [active, setActive] = useState<string | null>(null);
+    const [, setActive] = useState<string | null>(null);
 
     const user = useSelector((state: RootState) => state.user);
     const navigate = useNavigate();
@@ -26,11 +26,6 @@ export function Header({ className }: { className?: string }) {
                 <Link to={'/gpt-search'}>
                     <button className="text-white text-xl font-semibold border-2 border-black rounded-4xl p-4 cursor-pointer">GPT Search</button>
                 </Link>
-                {/* <Menu setActive={setActive}>
-                    <MenuItem setActive={setActive} active={active} item="Products" />
-                    <MenuItem setActive={setActive} active={active} item="Pricing">
-                    </MenuItem>
-                </Menu> */}
                 <div>
                     <ProductItem
                         title={user?.displayName ?? "User"}
