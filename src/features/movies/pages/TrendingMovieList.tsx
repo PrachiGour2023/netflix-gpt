@@ -14,7 +14,6 @@ const TrendingMovieList = () => {
   const isFetching = useRef<boolean>(false)
   const dispatch = useDispatch<AppDispatch>();
   const cards = useSelector((state: RootState) => state.movie.moviesInTheatre);
-  console.log("cardsssss", cards);
   
 
   useEffect(() => {

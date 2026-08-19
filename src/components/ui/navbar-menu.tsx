@@ -95,6 +95,7 @@ export const ProductItem = ({
         width={50}
         height={30}
         alt={title}
+        loading="lazy"
         className="shrink-0 rounded-md shadow-2xl object-cover"
       />
       <div>

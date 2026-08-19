@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "^2.16.0",
     "@radix-ui/react-label": "^2.1.11",
     "@tabler/icons-react": "^3.44.0",
     "@tailwindcss/vite": "^4.3.2",
     "clsx": "^2.1.1",
     "firebase": "^12.16.0",
     "motion": "^12.42.2",
+    "openai": "^6.49.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-redux": "^9.3.0",

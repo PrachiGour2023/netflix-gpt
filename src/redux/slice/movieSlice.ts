@@ -8,6 +8,9 @@ const initialState: any = {
     movieGenreList: [],
     indianMovies: [],
     movieVideo: [],
+    moviesSearch: [],
+    moviesName: [],
+    searchData: [],
     error: null
 }
 

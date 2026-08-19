@@ -8,8 +8,6 @@ const VideoBackground = ({ movieId }: { movieId: number }) => {
     const dispatch = useDispatch<AppDispatch>();
     const videoData = useSelector((state: RootState) => state.movie.movieVideo)
 
-    console.log("videodata", videoData)
-
     useEffect(() => {
         dispatch(getMovieVideo(movieId));
     }, [])

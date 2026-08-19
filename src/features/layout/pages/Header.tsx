@@ -3,7 +3,7 @@ import { Menu, MenuItem, ProductItem } from "../../../components/ui/navbar-menu"
 import { cn } from "../../../utils/utils";
 import { useSelector } from "react-redux";
 import type { RootState } from '../../../redux/store';
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../utils/firebase";
 
@@ -23,12 +23,14 @@ export function Header({ className }: { className?: string }) {
             className={cn("inset-x-0 top-0 z-50 mx-auto", className)}
         >
             <Menu setActive={setActive}>
-                <Menu setActive={setActive}>
-                    <MenuItem setActive={setActive} active={active} item="Services" />
+                <Link to={'/gpt-search'}>
+                    <button className="text-white text-xl font-semibold border-2 border-black rounded-4xl p-4 cursor-pointer">GPT Search</button>
+                </Link>
+                {/* <Menu setActive={setActive}>
                     <MenuItem setActive={setActive} active={active} item="Products" />
                     <MenuItem setActive={setActive} active={active} item="Pricing">
                     </MenuItem>
-                </Menu>
+                </Menu> */}
                 <div>
                     <ProductItem
                         title={user?.displayName ?? "User"}

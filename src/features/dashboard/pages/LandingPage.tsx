@@ -19,11 +19,11 @@ const LandingPage = () => {
     const tvData = useSelector((state: RootState) => state.tv);
 
     useEffect(() => {
-        dispatch(fetchInTheatreMovies(1));
-        dispatch(topRatedMovies(1));
-        dispatch(movieGenresList());
-        dispatch(getIndianMovies());
-        dispatch(getTodayAiredTVList());
+        if (!movieData.moviesInTheatre) dispatch(fetchInTheatreMovies(1));
+        if (!movieData.moviesTopRated) dispatch(topRatedMovies(1));
+        if (!movieData.movieGenreList) dispatch(movieGenresList());
+        if (!movieData.indianMovies) dispatch(getIndianMovies());
+        if (!tvData.currentAirList) dispatch(getTodayAiredTVList());
     }, []);
 
     return (
