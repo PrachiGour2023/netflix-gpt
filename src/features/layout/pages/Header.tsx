@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, MenuItem, ProductItem } from "../../../components/ui/navbar-menu";
+import { Menu, ProductItem } from "../../../components/ui/navbar-menu";
 import { cn } from "../../../utils/utils";
 import { useSelector } from "react-redux";
 import type { RootState } from '../../../redux/store';
