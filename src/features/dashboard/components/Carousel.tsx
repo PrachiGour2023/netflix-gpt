@@ -5,11 +5,11 @@ import { Carousel } from "../../../components/ui/carousel"
 import type { RootState } from "../../../redux/store";
 export function CarouselDemo() {
 
-    const movies = useSelector((state: RootState) => state.movie);
+    const indianMovies = useSelector((state: RootState) => state.movie.indianMovies);
 
     return (
         <div className="relative overflow-hidden w-full h-full py-20">
-            <Carousel slides={movies.indianMovies} />
+            <Carousel slides={indianMovies} />
         </div>
     );
 }

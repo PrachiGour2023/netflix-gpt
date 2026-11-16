@@ -96,7 +96,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
                         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                         className="relative w-full h-full object-cover opacity-25 transition-opacity duration-600 ease-in-out"
                         alt=""
-                        fetchPriority="high"
+                        fetchPriority={index === 0 ? 'high' : 'low'}
                     />
                     <img
                         className="absolute inset-0 h-[120%] object-contain opacity-100 transition-opacity duration-600 ease-in-out"
@@ -107,7 +107,9 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
                                 "linear-gradient(to right, black 45%, transparent 100%)",
                         }}
                         alt={title}
-                        fetchPriority="high"
+                        fetchPriority={index === 0 ? 'high' : 'low'}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding={index === 0 ? 'sync' : 'async'}
                         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                         onLoad={imageLoaded}
                     />

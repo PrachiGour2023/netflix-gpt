@@ -2,14 +2,14 @@
 import { createBrowserRouter } from 'react-router';
 import GlobalError from './GlobalError';
 import { RootLayout } from './RootLayout';
-import TrendingMovieList from '../features/movies/pages/TrendingMovieList';
-import TopRatedMovieList from '../features/movies/pages/TopRatedMovieList';
-import MovieDetailPage from '../features/movies/pages/MovieDetailPage';
-import { lazy } from 'react';
-import GptHome from '../features/gpt/pages/GptHome';
+import { lazy, Suspense } from 'react';
 
 const Landing = lazy(() => import("../features/dashboard/pages/LandingPage"));
 const Home = lazy(() => import("../features/auth/pages/Home"))
+const TrendingMovieList = lazy(() => import("../features/movies/pages/TrendingMovieList"))
+const MovieDetailPage = lazy(() => import("../features/movies/pages/MovieDetailPage"))
+const TopRatedMovieList = lazy(() => import("../features/movies/pages/TopRatedMovieList"))
+const GptHome = lazy(() => import("../features/gpt/pages/GptHome"))
 
 export const AppRoutes = createBrowserRouter([
     {
@@ -18,27 +18,51 @@ export const AppRoutes = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Home />,
+                element: (
+                    <Suspense fallback={<div>...Loading Home</div>}>
+                        <Home />
+                    </Suspense>
+                ),
             },
             {
                 path: "/landing",
-                element: <Landing />,
+                element: (
+                    <Suspense fallback={<div>...Loading Landing Page</div>}>
+                        <Landing />
+                    </Suspense>
+                ),
             },
             {
                 path: "/trending-movies",
-                element: <TrendingMovieList />
+                element: (
+                    <Suspense fallback={<div>...Loading Trending Page</div>}>
+                        <TrendingMovieList />
+                    </Suspense>
+                ),
             },
             {
                 path: "/top-rated-movies",
-                element: <TopRatedMovieList />
+                element: (
+                    <Suspense fallback={<div>...Loading Top Rated Movies</div>}>
+                        <TopRatedMovieList />
+                    </Suspense>
+                ),
             },
             {
                 path: "/movie-detail/:id",
-                element: <MovieDetailPage />
+                element: (
+                    <Suspense fallback={<div>...Loading Movies Detail</div>}>
+                        <MovieDetailPage />
+                    </Suspense>
+                ),
             },
             {
                 path: "/gpt-search",
-                element: <GptHome />
+                element: (
+                    <Suspense fallback={<div>...Loading Gpt</div>}>
+                        <GptHome />
+                    </Suspense>
+                ),
             }
         ],
     },
