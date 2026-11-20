@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { motion } from "motion/react";
 import { cn } from "../../utils/utils";
 
@@ -25,6 +25,7 @@ export const Tabs = ({
     const [active, setActive] = useState<Tab>(propTabs[0]);
     const [tabs, setTabs] = useState<Tab[]>(propTabs);
     const [hovering, setHovering] = useState(false);
+    const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
         if (!propTabs.length) return;
@@ -36,8 +37,11 @@ export const Tabs = ({
         const newTabs = [...propTabs];
         const selectedTab = newTabs.splice(idx, 1);
         newTabs.unshift(selectedTab[0]);
-        setTabs(newTabs);
         setActive(newTabs[0]);
+        startTransition(() => {
+            setTabs(newTabs);
+        })
+        
     };
 
     return (
@@ -81,7 +85,7 @@ export const Tabs = ({
             <FadeInDiv
                 tabs={tabs}
                 active={active}
-                key={active?.value}
+                isPending={isPending}
                 hovering={hovering}
                 className={cn("mt-12", contentClassName)}
             />
@@ -93,21 +97,22 @@ export const FadeInDiv = ({
     className,
     tabs,
     hovering,
+    isPending
 }: {
     className?: string;
-    key?: string;
     tabs: Tab[];
     active: Tab;
     hovering?: boolean;
+    isPending?: boolean;
 }) => {
     const isActive = (tab: Tab) => {
         return tab?.value === tabs[0]?.value;
     };
+    const visibleTabs = tabs.slice(0, 3);
     return (
-        <div className="relative w-full h-full">
-            {tabs.map((tab, idx) => (
+        <div className={cn("relative w-full h-full transition-opacity", isPending && "opacity-80")}>
+            {visibleTabs.map((tab, idx) => (
                 <motion.div
-                    key={tab?.value}
                     layoutId={tab?.value}
                     style={{
                         scale: 1 - idx * 0.1,

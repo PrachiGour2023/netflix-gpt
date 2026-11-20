@@ -5,10 +5,10 @@ import { HoverMovieCard } from "./HoverCard";
 
 export function TabsDemo() {
 
-    const movieList = useSelector((state: RootState) => state.movie)
+    const movieGenreList = useSelector((state: RootState) => state.movie.movieGenreList)
     
 
-    const tab = movieList.movieGenreList.map((item: any) => (
+    const tab = movieGenreList.map((item: any) => (
         {
             id: item.id,
             title: item.name,
